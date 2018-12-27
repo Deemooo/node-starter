@@ -12,7 +12,6 @@ http://localhost:8080
 
 ## 目录结构
   ```html
-  CWF_web-app
       ├─client                   # 客户端
       │
       ├─db                       # 数据库
