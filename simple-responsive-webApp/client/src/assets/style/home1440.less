@@ -1,0 +1,44 @@
+@import (reference) "./dynamic";
+.index {
+  width: 100%;
+  padding: 70px 70px 0 87px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  background-color: #fff;
+  font-size: 24px;
+  .index-header {
+    position: relative;
+    margin-bottom: 50px;
+    .title {
+      font-size: 36px;
+      font-weight: 700;
+    }
+  }
+  .index-nav {
+    margin-bottom: 45px;
+    a:nth-child(2) {
+      padding: 0 10px;
+      border-left: 2px solid @fontColor;
+      border-right: 2px solid @fontColor;
+    }
+  }
+  .index-content {
+    background-color: @backColor;
+    & > header {
+      background-color: @gray;
+      .content-tab {
+        display: inline-block;
+        padding: 27px 70px;
+        cursor: pointer;
+      }
+      .content-tab-selected {
+        background-color: @backColor;
+      }
+    }
+  }
+  .tab-content {
+    height: 608px;
+    overflow-y: auto;
+    background-color: @backColor;
+  }
+}
