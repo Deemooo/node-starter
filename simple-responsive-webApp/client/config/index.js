@@ -8,11 +8,18 @@ const HOST = 'localhost'
 const PORT = 8090
 module.exports = {
   dev: {
-
-    // Paths
+    // path
     assetsSubDirectory: 'static',
-    assetsPublicPath: `//${HOST}:${PORT}/`,
-    proxyTable: {},
+    assetsPublicPath: '/',
+    proxyTable: {
+      '/api': {
+        target: 'http://localhost:3000/api/',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': ''
+        }
+      }
+    },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST

@@ -23,21 +23,15 @@
           <span
             v-for="(item, index) in tabList"
             :key="index"
-            @click="tabSelect = index"
+            @click="getGoodsData(index, item.name)"
             :class="{'content-tab-selected': index === tabSelect}"
             class="content-tab">
             {{ item.title }}
           </span>
         </header>
         <!--tab页-->
-        <section v-show="tabSelect === 0" class="tab-content">
-          <goods v-for="(item, index) in explosive" :goodInfo="item" :key="index"></goods>
-        </section>
-        <section v-show="tabSelect === 1" class="tab-content">
-          <goods v-for="(item, index) in latest" :goodInfo="item" :key="index"></goods>
-        </section>
-        <section v-show="tabSelect === 2" class="tab-content">
-          <goods v-for="(item, index) in recommend" :goodInfo="item" :key="index"></goods>
+        <section class="tab-content">
+          <goods v-for="(item, index) in goodsInfo" :goodInfo="item" :key="index"></goods>
         </section>
       </section>
     </div>
@@ -69,29 +63,21 @@
             }
           ],
           tabSelect: 1,
-          explosive: [],
-          latest: [],
-          recommend: []
+          goodsInfo: []
         };
     },
     methods: {
       // 获取商品信息
-      getGoodsData () {
-        if (goodsData && goodsData.length !== 0) {
-          goodsData.forEach((item) => {
-            if (parseInt(item.price) <= 30) {
-              this.explosive.push(item);
-            } else if (parseInt(item.price) > 30 && parseInt(item.price) <= 50) {
-              this.latest.push(item);
-            } else {
-              this.recommend.push(item);
-            }
+      getGoodsData (index, name) {
+        this.tabSelect = index;
+        this.$http.get(`/api/getGoodsInfo?type=${name}`)
+          .then((response) => {
+            this.goodsInfo = response.data || [];
           });
-        }
       }
     },
     created () {
-      this.getGoodsData();
+      this.getGoodsData(1, 'all');
     },
     mounted () {},
     watch: {}
