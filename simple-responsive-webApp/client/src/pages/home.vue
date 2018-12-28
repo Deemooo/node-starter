@@ -77,7 +77,7 @@
       }
     },
     created () {
-      this.getGoodsData(1, 'all');
+      this.getGoodsData(1, 'latest');
     },
     mounted () {},
     watch: {}
@@ -85,7 +85,7 @@
 </script>
 <style lang="less">
   @import "../assets/style/home1440";
-  @media screen and (max-width: 414px) {
+  @media screen and (max-width: 600px) {
     @import "../assets/style/home414";
   }
 </style>
