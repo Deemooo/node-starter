@@ -1,6 +1,6 @@
 module.exports = {
-    register: async function(name, pwd) {
-        let data
+    register: async function (name, pwd) {
+        let data;
         if(name === 'ikcamp' && pwd === '123456'){
             data = {
                 status: 0,
@@ -9,7 +9,7 @@ module.exports = {
                     content: "欢迎进入个人中心"
                 }
             }
-        }else{
+        } else {
             data = {
                 status: -1,
                 data: {
@@ -18,6 +18,6 @@ module.exports = {
                 }
             }
         }
-        return data
+        return data;
     }
 }

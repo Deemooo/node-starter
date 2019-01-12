@@ -1,7 +1,7 @@
 const homeService = require('../service/home');
 module.exports = {
     index: async (ctx, next) => {
-        await ctx.render('home/index', {title: 'iKcamp欢迎您!'});
+        await ctx.render("home/index", {title: "iKcamp欢迎您"});
     },
     home: async (ctx, next) => {
         console.log(ctx.request.query);
