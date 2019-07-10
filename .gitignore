@@ -1,0 +1,9 @@
+/simple-file-server/node_modules
+/simple-file-server/.idea
+/login-demo/.idea
+/login-demo/node_modules
+node_modules
+/mongodb-win32-x86_64-2008plus-ssl-4.0.3
+logs/
+*.log
+.vscode/
