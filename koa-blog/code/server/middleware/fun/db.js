@@ -1,0 +1,35 @@
+
+
+module.exports = {
+    addUser: (model, conditions) => {
+        return new Promise((resolve, reject) => {
+            model.create(conditions, (err, res) => {
+                if (err) {
+                    console.error('Error: ' + JSON.stringify(err));
+                    reject(err);
+                    return false;
+                }
+                console.log('Add success!');
+                resolve(res);
+            });
+        });
+    },
+    findOne: (model, conditions, fields, options = {}) => {
+        return new Promise((resolve, reject) => {
+            model.find(conditions, fields, options, function (err, res) {
+                if (err) {
+                    console.error('Error: ' + JSON.stringify(err));
+                    reject(err);
+                    return false;
+                } else {
+                    if (res.length !== 0) {
+                        console.log('find success!');
+                    } else {
+                        console.log('find fail:no this data!');
+                    }
+                    resolve(res);
+                }
+            });    
+        })
+    }
+};
