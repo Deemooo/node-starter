@@ -16,7 +16,7 @@ module.exports = {
     },
     findOne: (model, conditions, fields, options = {}) => {
         return new Promise((resolve, reject) => {
-            model.find(conditions, fields, options, function (err, res) {
+            model.find(conditions, fields, options, (err, res) => {
                 if (err) {
                     console.error('Error: ' + JSON.stringify(err));
                     reject(err);
