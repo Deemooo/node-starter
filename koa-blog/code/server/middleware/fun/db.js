@@ -29,7 +29,21 @@ module.exports = {
                     }
                     resolve(res);
                 }
-            });    
-        })
+            });
+        });
+    },
+    updateOne: (model, fields, options) => {
+        return new Promise((resolve, reject) => {
+            model.update(fields, { $set: options }, (err, res) => {
+                if (err) {
+                    console.error('Error: ' + JSON.stringify(err));
+                    reject(err);
+                    return false;
+                } else {
+                    console.log('update success!');
+                    resolve(res);
+                }
+            });
+        });
     }
 };
