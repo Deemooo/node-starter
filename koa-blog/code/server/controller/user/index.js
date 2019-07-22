@@ -1,4 +1,6 @@
 const userModel = require('../../models/user');
+const jwt = require('jsonwebtoken');
+const config = require('../../config');
 
 module.exports = {
     signup: async (ctx, next) => {
@@ -18,7 +20,7 @@ module.exports = {
     },
     login: async (ctx, next) => {
         let paramsData = ctx.request.body;
-        let { userId, pwd } = paramsData;
+        let { _id, userId, username, pwd, roles } = paramsData;
         try {
             let data = await ctx.findOne(userModel, { userId });
             if (data && data.length !== 0) {
@@ -27,10 +29,30 @@ module.exports = {
                     return false;
                 }
                 await ctx.updateOne(userModel, { userId }, {loginTime: new Date()});
+                let payload = {
+                    _id,
+                    userId,
+                    username,
+                    pwd,
+                    roles
+                };
+                let token = jwt.sign(payload, conf.auth.admin_secret, {expiresIn: '24h'});
+                ctx.cookies.set(conf.auth.tokenKey, token, {
+                    httpOnly: false
+                });
                 ctx.send({message: '登录成功!'});
             } else {
                 ctx.sendError('账户不存在!');
             }
+        } catch (error) {
+            ctx.sendError(error);
+        }
+    },
+    loginout: async (ctx, next) => {
+        let paramsData = ctx.request.body;
+        let { userId, pwd } = paramsData;
+        try {
+
         } catch (error) {
             ctx.sendError(error);
         }
