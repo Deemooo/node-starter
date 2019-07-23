@@ -28,7 +28,6 @@ module.exports = {
                     ctx.sendError('密码错误!');
                     return false;
                 }
-                await ctx.updateOne(userModel, { userId }, {loginTime: new Date()});
                 let payload = {
                     _id,
                     userId,
@@ -40,6 +39,7 @@ module.exports = {
                 ctx.cookies.set(conf.auth.tokenKey, token, {
                     httpOnly: false
                 });
+                await ctx.updateOne(userModel, { userId }, {loginTime: new Date()}, { token });
                 ctx.send({message: '登录成功!'});
             } else {
                 ctx.sendError('账户不存在!');
@@ -50,9 +50,18 @@ module.exports = {
     },
     loginout: async (ctx, next) => {
         let paramsData = ctx.request.body;
-        let { userId, pwd } = paramsData;
+        let { _id, userId, username, pwd, roles } = paramsData;        
         try {
-
+            let payload = {
+                _id,
+                userId,
+                username,
+                pwd,
+                roles
+            };
+            let token = jwt.sign(payload, conf.auth.admin_secret, {expiresIn: '0'});
+            await ctx.updateOne(userModel, { userId }, {loginTime: new Date()}, { token });
+            ctx.send({message: '退出登录成功!'});
         } catch (error) {
             ctx.sendError(error);
         }
