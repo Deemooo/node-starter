@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import configig from '../../configig';
+import config from '../../config';
 
 module.exports = () => {
     const auth = ctx => {
