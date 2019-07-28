@@ -46,7 +46,7 @@ module.exports = {
     },
     deleteOne: (model, fields, options) => {
         return new Promise((resolve, reject) => {
-            model.remove(fields, 1, (err, res) => {
+            model.remove(fields, (err, res) => {
                 if (err) {
                     console.error('Error: ' + JSON.stringify(err));
                     reject(err);
