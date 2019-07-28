@@ -1,5 +1,5 @@
 const blogModel = require('../../models/blog');
-
+const marked = require('marked');
 module.exports = {
     getArticleList: async (ctx, next) => {
         try {
@@ -28,6 +28,7 @@ module.exports = {
     addArticle: async (ctx, next) => {
         try {
             let paramsData = ctx.request.body;
+            paramsData.html = marked(paramsData.html);
             let data = await ctx.add(blogModel, paramsData);
             ctx.send(data, '文章添加成功!');
         } catch (error) {
@@ -37,7 +38,8 @@ module.exports = {
     updateArticle: async (ctx, next) => {
         try {
             let paramsData = ctx.request.body;
-            let { blogId } = paramsData.blogId;
+            let { blogId, html } = paramsData.blogId;
+            paramsData.html = marked(paramsData);
             let data = await ctx.updateOne(blogModel, { blogId }, { paramsData });
             ctx.send(data, '文章更新成功!');
         } catch (error) {
@@ -47,7 +49,7 @@ module.exports = {
     deleteArticle: async (ctx, next) => {
         try {
             let blogId = ctx.request.body.blogId;
-            let data = await ctx.deleteOne(blogModel,  { blogId });
+            let data = await ctx.deleteOne(blogModel, { blogId });
             ctx.send(data, '文章删除成功!');            
         } catch (error) {
             ctx.sendError(error);

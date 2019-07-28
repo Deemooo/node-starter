@@ -15,9 +15,9 @@ module.exports = (app) => {
     // 新增文章
     router.post('/addArticle', controller.blog.addArticle);
     // 更新文章
-    router.post('/updateArticle', controller.blog.updateArticle);
+    router.put('/updateArticle', controller.blog.updateArticle);
     // 删除文章
-    router.post('/deleteArticle', controller.blog.deleteArticle);
+    router.delete('/deleteArticle', controller.blog.deleteArticle);
 
     app.use(router.routes());
 };
