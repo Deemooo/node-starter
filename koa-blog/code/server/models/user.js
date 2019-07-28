@@ -1,7 +1,13 @@
 const db = require('../db');
 let userSchema = db.Schema({
-    userId: Number,
-    userName: String,
+    userId: {
+        type: Number,
+        required: true
+    },
+    userName: {
+        type: String,
+        required: true
+    },
     pwd: String,
     name: String,
     avatar: String,

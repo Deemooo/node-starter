@@ -2,14 +2,13 @@ const userModel = require('../../models/user');
 
 module.exports = {
     signup: async (ctx, next) => {
-        let paramsData = ctx.request.body;
-        let { userId } = paramsData;
         try {
-            let data = await ctx.findOne(userModel, { userId });
+            let paramsData = ctx.request.body;
+            let data = await ctx.findOne(userModel, { userId: paramsData.userId });
             if (data && data.length !== 0) {
                 ctx.sendError('账户已经存在, 请重新添加!');
             } else {
-                let data = await ctx.addUser(userModel, paramsData);
+                let data = await ctx.add(userModel, paramsData);
                 ctx.session.userId = data[0].userId;
                 ctx.send(data, '账号注册成功!');
             }
@@ -18,14 +17,14 @@ module.exports = {
         }
     },
     login: async (ctx, next) => {
-        let paramsData = ctx.request.body;
-        let { userName, pwd } = paramsData;
         try {
+            let paramsData = ctx.request.body;
+            let { userName, pwd } = paramsData;
             let data = await ctx.findOne(userModel, { userName });
             if (data && data.length !== 0) {
                 if (data[0].pwd !== pwd) {
                     ctx.sendError('密码错误!');
-                    return false;
+                    return;
                 }
                 await ctx.updateOne(userModel, { userName }, {loginTime: new Date()});
                 ctx.session.userId = data[0].userId;
